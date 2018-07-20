@@ -1,0 +1,16 @@
+D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/uninstall.dir
+D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/UpdateAssimpLibsDebugSymbolsAndDLLs.dir
+D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/INSTALL.dir
+D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/ALL_BUILD.dir
+D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/ZERO_CHECK.dir
+D:/Desktop/progettoGrafica/assimpBuild/contrib/zlib/CMakeFiles/zlibstatic.dir
+D:/Desktop/progettoGrafica/assimpBuild/contrib/zlib/CMakeFiles/INSTALL.dir
+D:/Desktop/progettoGrafica/assimpBuild/contrib/zlib/CMakeFiles/ALL_BUILD.dir
+D:/Desktop/progettoGrafica/assimpBuild/code/CMakeFiles/assimp.dir
+D:/Desktop/progettoGrafica/assimpBuild/code/CMakeFiles/INSTALL.dir
+D:/Desktop/progettoGrafica/assimpBuild/tools/assimp_cmd/CMakeFiles/assimp_cmd.dir
+D:/Desktop/progettoGrafica/assimpBuild/tools/assimp_cmd/CMakeFiles/INSTALL.dir
+D:/Desktop/progettoGrafica/assimpBuild/test/CMakeFiles/gtest.dir
+D:/Desktop/progettoGrafica/assimpBuild/test/CMakeFiles/unit.dir
+D:/Desktop/progettoGrafica/assimpBuild/test/CMakeFiles/INSTALL.dir
+D:/Desktop/progettoGrafica/assimpBuild/test/headercheck/CMakeFiles/INSTALL.dir

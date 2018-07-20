@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DE8DF44E-A799-3FC6-A093-839F1813B44B}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>BulletRobotics</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Desktop\progettoGrafica\bulletBuild\lib\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">BulletRobotics.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">BulletRobotics_Debug</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Desktop\progettoGrafica\bulletBuild\lib\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">BulletRobotics.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">BulletRobotics</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Desktop\progettoGrafica\bulletBuild\lib\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">BulletRobotics.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">BulletRobotics_MinsizeRel</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Desktop\progettoGrafica\bulletBuild\lib\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">BulletRobotics.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">BulletRobotics_RelWithDebugInfo</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_DEBUG;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;BT_ENABLE_CLSOCKET;BT_ENABLE_ENET;PHYSICS_SERVER_DIRECT;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;BT_ENABLE_CLSOCKET;BT_ENABLE_ENET;PHYSICS_SERVER_DIRECT;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;BT_ENABLE_CLSOCKET;BT_ENABLE_ENET;PHYSICS_SERVER_DIRECT;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;BT_ENABLE_CLSOCKET;BT_ENABLE_ENET;PHYSICS_SERVER_DIRECT;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;BT_ENABLE_CLSOCKET;BT_ENABLE_ENET;PHYSICS_SERVER_DIRECT;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;BT_ENABLE_CLSOCKET;BT_ENABLE_ENET;PHYSICS_SERVER_DIRECT;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;BT_ENABLE_CLSOCKET;BT_ENABLE_ENET;PHYSICS_SERVER_DIRECT;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;BT_ENABLE_CLSOCKET;BT_ENABLE_ENET;PHYSICS_SERVER_DIRECT;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Desktop\progettoGrafica\include\bullet\src;D:\Desktop\progettoGrafica\include\bullet\examples;D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\include;D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Desktop\progettoGrafica\include\bullet\Extras\BulletRobotics\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/Desktop/progettoGrafica/include/bullet/Extras/BulletRobotics/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/Desktop/progettoGrafica/include/bullet -BD:/Desktop/progettoGrafica/bulletBuild --check-stamp-file D:/Desktop/progettoGrafica/bulletBuild/Extras/BulletRobotics/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/Desktop/progettoGrafica/include/bullet/Extras/BulletRobotics/CMakeLists.txt;D:\Desktop\progettoGrafica\include\bullet\Extras\BulletRobotics\CMakeLists.txt;D:\Desktop\progettoGrafica\include\bullet\Extras\BulletRobotics\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Desktop\progettoGrafica\bulletBuild\Extras\BulletRobotics\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/Desktop/progettoGrafica/include/bullet/Extras/BulletRobotics/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/Desktop/progettoGrafica/include/bullet -BD:/Desktop/progettoGrafica/bulletBuild --check-stamp-file D:/Desktop/progettoGrafica/bulletBuild/Extras/BulletRobotics/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/Desktop/progettoGrafica/include/bullet/Extras/BulletRobotics/CMakeLists.txt;D:\Desktop\progettoGrafica\include\bullet\Extras\BulletRobotics\CMakeLists.txt;D:\Desktop\progettoGrafica\include\bullet\Extras\BulletRobotics\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Desktop\progettoGrafica\bulletBuild\Extras\BulletRobotics\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/Desktop/progettoGrafica/include/bullet/Extras/BulletRobotics/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/Desktop/progettoGrafica/include/bullet -BD:/Desktop/progettoGrafica/bulletBuild --check-stamp-file D:/Desktop/progettoGrafica/bulletBuild/Extras/BulletRobotics/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:/Desktop/progettoGrafica/include/bullet/Extras/BulletRobotics/CMakeLists.txt;D:\Desktop\progettoGrafica\include\bullet\Extras\BulletRobotics\CMakeLists.txt;D:\Desktop\progettoGrafica\include\bullet\Extras\BulletRobotics\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Desktop\progettoGrafica\bulletBuild\Extras\BulletRobotics\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/Desktop/progettoGrafica/include/bullet/Extras/BulletRobotics/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/Desktop/progettoGrafica/include/bullet -BD:/Desktop/progettoGrafica/bulletBuild --check-stamp-file D:/Desktop/progettoGrafica/bulletBuild/Extras/BulletRobotics/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:/Desktop/progettoGrafica/include/bullet/Extras/BulletRobotics/CMakeLists.txt;D:\Desktop\progettoGrafica\include\bullet\Extras\BulletRobotics\CMakeLists.txt;D:\Desktop\progettoGrafica\include\bullet\Extras\BulletRobotics\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Desktop\progettoGrafica\bulletBuild\Extras\BulletRobotics\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\plugins\pdControlPlugin\pdControlPlugin.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\plugins\pdControlPlugin\pdControlPlugin.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\b3RobotSimulatorClientAPI_NoGUI.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\b3RobotSimulatorClientAPI_NoGUI.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\b3RobotSimulatorClientAPI_NoDirect.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\b3RobotSimulatorClientAPI_NoDirect.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\IKTrajectoryHelper.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\IKTrajectoryHelper.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\plugins\tinyRendererPlugin\tinyRendererPlugin.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\plugins\tinyRendererPlugin\TinyRendererVisualShapeConverter.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\OpenGLWindow\SimpleCamera.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\OpenGLWindow\SimpleCamera.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\TinyRenderer\geometry.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\TinyRenderer\model.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\TinyRenderer\tgaimage.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\TinyRenderer\our_gl.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\TinyRenderer\TinyRenderer.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\InProcessMemory.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClient.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClient.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsServer.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsServer.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsServerSharedMemory.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsServerSharedMemory.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsDirect.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsDirect.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsDirectC_API.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsDirectC_API.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsServerCommandProcessor.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsServerCommandProcessor.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\b3PluginManager.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\b3PluginManager.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientSharedMemory.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientSharedMemory.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientSharedMemory_C_API.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientSharedMemory_C_API.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientC_API.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientC_API.h" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\SharedMemoryPublic.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\Win32SharedMemory.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\Win32SharedMemory.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PosixSharedMemory.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PosixSharedMemory.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Utils\b3ResourcePath.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\Utils\b3ResourcePath.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Utils\RobotLoggingUtil.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\Utils\RobotLoggingUtil.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Utils\b3Clock.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\Utils\b3ERPCFMHelper.hpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\Utils\b3ReferenceFrameHelper.hpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Utils\ChromeTraceUtil.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\Wavefront\tiny_obj_loader.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\Wavefront\tiny_obj_loader.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\stb_image\stb_image.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\BussIK\Jacobian.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\BussIK\LinearR2.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\BussIK\LinearR3.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\BussIK\LinearR4.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\BussIK\MatrixRmn.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\BussIK\Misc.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\BussIK\Node.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\BussIK\Tree.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\BussIK\VectorRn.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Importers\ImportColladaDemo\LoadMeshFromCollada.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Importers\ImportObjDemo\LoadMeshFromObj.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Importers\ImportObjDemo\Wavefront2GLInstanceGraphicsShape.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Importers\ImportMJCFDemo\BulletMJCFImporter.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Importers\ImportURDFDemo\BulletUrdfImporter.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Importers\ImportURDFDemo\MyMultiBodyCreator.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Importers\ImportURDFDemo\URDF2Bullet.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Importers\ImportURDFDemo\UrdfParser.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Importers\ImportURDFDemo\urdfStringSplit.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\Importers\ImportMeshUtility\b3ImportMeshUtility.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\MultiThreading\b3PosixThreadSupport.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\MultiThreading\b3Win32ThreadSupport.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\MultiThreading\b3ThreadSupportInterface.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientUDP.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientUDP_C_API.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientUDP.h" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientUDP_C_API.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\win32.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\unix.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\callbacks.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\compress.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\host.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\list.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\packet.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\peer.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\enet\protocol.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientTCP.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientTCP.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientTCP_C_API.cpp" />
+    <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\SharedMemory\PhysicsClientTCP_C_API.h" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src\SimpleSocket.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src\ActiveSocket.cpp" />
+    <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\ThirdPartyLibs\clsocket\src\PassiveSocket.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\Desktop\progettoGrafica\bulletBuild\ZERO_CHECK.vcxproj">
+      <Project>{C520F8A6-D418-359A-A36D-8DA37B73FBC6}</Project>
+      <Name>ZERO_CHECK</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

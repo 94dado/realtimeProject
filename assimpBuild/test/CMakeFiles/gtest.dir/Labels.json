@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "D:/Desktop/progettoGrafica/assimpBuild/test/CMakeFiles/gtest"
+		},
+		{
+			"file" : "D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/1dee0973a5926aaa313a6dff864243a4/gtest.rule"
+		},
+		{
+			"file" : "D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/43570d65571605e8e340f1c21cb4cb87/gtest-complete.rule"
+		},
+		{
+			"file" : "D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/cb54adeaad4a0fe6819c96ddb7384126/gtest-install.rule"
+		},
+		{
+			"file" : "D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/cb54adeaad4a0fe6819c96ddb7384126/gtest-mkdir.rule"
+		},
+		{
+			"file" : "D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/cb54adeaad4a0fe6819c96ddb7384126/gtest-download.rule"
+		},
+		{
+			"file" : "D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/cb54adeaad4a0fe6819c96ddb7384126/gtest-update.rule"
+		},
+		{
+			"file" : "D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/cb54adeaad4a0fe6819c96ddb7384126/gtest-patch.rule"
+		},
+		{
+			"file" : "D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/cb54adeaad4a0fe6819c96ddb7384126/gtest-configure.rule"
+		},
+		{
+			"file" : "D:/Desktop/progettoGrafica/assimpBuild/CMakeFiles/cb54adeaad4a0fe6819c96ddb7384126/gtest-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"gtest"
+		],
+		"name" : "gtest"
+	}
+}
