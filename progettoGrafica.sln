@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGLWindow", "bulletBuild
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "bulletGLFW\src\glfw.vcxproj", "{46C4EBED-FDCC-30E1-845C-C78CB4C54ED8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3Common", "bulletBuild\src\Bullet3Common\Bullet3Common.vcxproj", "{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -159,6 +161,18 @@ Global
 		{46C4EBED-FDCC-30E1-845C-C78CB4C54ED8}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|Win32
 		{46C4EBED-FDCC-30E1-845C-C78CB4C54ED8}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|Win32
 		{46C4EBED-FDCC-30E1-845C-C78CB4C54ED8}.RelWithDebInfo|x86.Build.0 = RelWithDebInfo|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.Debug|x64.ActiveCfg = Debug|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.Debug|x86.ActiveCfg = Debug|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.Debug|x86.Build.0 = Debug|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.MinSizeRel|x64.ActiveCfg = MinSizeRel|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.MinSizeRel|x86.ActiveCfg = MinSizeRel|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.MinSizeRel|x86.Build.0 = MinSizeRel|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.Release|x64.ActiveCfg = Release|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.Release|x86.ActiveCfg = Release|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.Release|x86.Build.0 = Release|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|Win32
+		{2A90DC9A-6DFB-3902-BBD2-16513AA93B0C}.RelWithDebInfo|x86.Build.0 = RelWithDebInfo|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

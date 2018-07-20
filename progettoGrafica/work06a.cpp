@@ -113,6 +113,9 @@ GLfloat repeat = 1.0f;
 //matrices
 glm::mat4 projection;
 
+// position and rotation map
+glm::vec3 posMap = glm::vec3(0.0f, -30.0f, 0.0f);
+glm::vec3 rotMap = glm::vec3(0.0f, 1.0f, 0.0f);
 
 // boolean to handle show particle systems
 #define RAIN_B 0
@@ -243,6 +246,9 @@ int main()
 
 	glCheckError();
 
+	// added rigidbody map
+	btRigidBody* plane = bulletSimulation.createRigidBody(2, "../progettoGrafica/models/volcano.obj", posMap, glm::vec3(0.0f, 0.0f, 0.0f), rotMap, 0, 0, 0);
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	// Rendering loop: this code is executed at each frame
 	while (!glfwWindowShouldClose(window))
@@ -350,8 +356,8 @@ void RenderObjects(Shader &shader, Model&envModel)
 	// Crea la matrice delle trasformazioni tramite la definizione delle 3 trasformazioni, e la matrice di trasformazione delle normali
 	glm::mat4 envModelMatrix;
 	glm::mat3 envNormalMatrix;
-	envModelMatrix = glm::translate(envModelMatrix, glm::vec3(0.0f, -30.0f, 0.0f));
-	envModelMatrix = glm::rotate(envModelMatrix, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	envModelMatrix = glm::translate(envModelMatrix, posMap);
+	envModelMatrix = glm::rotate(envModelMatrix, glm::radians(1.0f), rotMap);
 	envModelMatrix = glm::scale(envModelMatrix, glm::vec3(0.0005f, 0.0005f, 0.0005f));
 
 	envNormalMatrix = glm::inverseTranspose(glm::mat3(view*envModelMatrix));

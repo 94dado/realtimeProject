@@ -158,6 +158,9 @@
     <ProjectReference Include="..\bulletBuild\src\Bullet3Collision\Bullet3Collision.vcxproj">
       <Project>{7b01f3f0-eec5-331b-af4c-dbece9191107}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\bulletBuild\src\Bullet3Common\Bullet3Common.vcxproj">
+      <Project>{2a90dc9a-6dfb-3902-bbd2-16513aa93b0c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\bulletBuild\src\Bullet3Dynamics\Bullet3Dynamics.vcxproj">
       <Project>{78bf915c-9f88-3c52-a3ee-0b9092680d3b}</Project>
     </ProjectReference>
