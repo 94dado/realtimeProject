@@ -250,7 +250,7 @@ int main()
 	glCheckError();
 
 	// added rigidbody map
-	btRigidBody* plane = bulletSimulation.createRigidBody(2, "../progettoGrafica/models/volcano.obj", posMap, glm::vec3(0.0f, 0.0f, 0.0f), rotMap, 0, 0, 0);
+	bulletObject* plane = bulletSimulation.createRigidBody(MAP, "../progettoGrafica/models/volcano.obj", posMap, 0.0f, rotMap, 0, 0, 0);
 	// added callback to check collision
 	gContactAddedCallback = ContactAddedCallbackBullet;
 
@@ -471,6 +471,14 @@ bool ContactAddedCallbackBullet(btManifoldPoint &collisonPoint, const btCollisio
 	bulletObject* firstObj = (bulletObject*)obj1->getCollisionObject()->getUserPointer();
 	bulletObject* secondObj = (bulletObject*)obj2->getCollisionObject()->getUserPointer();
 	
-	cout << "Collision " << firstObj->type << " with " << secondObj->type << endl;
+	//cout << "Collision " << firstObj->type << " with " << secondObj->type << endl;
+
+	// check collision and set the hit with the map
+	if ((firstObj->type != secondObj->type) && firstObj->type == PARTICLE) {
+		firstObj->hit = true;
+	}
+	else if ((firstObj->type != secondObj->type) && secondObj->type == PARTICLE) {
+		secondObj->hit = true;
+	}
 	return false;
 }
