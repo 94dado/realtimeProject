@@ -56,7 +56,7 @@ const vec3 RimColor  = vec3(0.2, 0.2, 0.2);
 const vec3 fogColor = vec3(0.5,0.5,0.5);
 
 //wet effect constants
-float distVertex = 5.7;
+float distVertex = 4;
 
 //all credits goes to: https://github.com/hughsk/glsl-hemisphere-light
 vec3 hemisphere_light(vec3 normal, vec3 sky, vec3 ground,
@@ -114,14 +114,14 @@ float fnoise(vec3 x) {
 	return v;
 }
 
-//credits:https://github.com/sayakbiswas/wet-surface-glsl
-vec3 wet_effect(vec3 materialDiffuseColor){
+
+vec3 snow_effect(vec3 materialDiffuseColor){
     vec3 color;
     vec3 lightColor = vec3(1, 1, 1);
     float lightPower = 50.0;
 
-    vec3 materialAmbientColor = vec3(0.001, 0.001, 0.001) * materialDiffuseColor;
-    vec3 materialSpecularColor = vec3(0.05, 0.05, 0.05);
+    vec3 materialAmbientColor = vec3(0.1, 0.1, 0.1) * materialDiffuseColor;
+    vec3 materialSpecularColor = vec3(1,1,1);
 
     float distance = distVertex;
 
@@ -185,7 +185,7 @@ void main()
         illuminatedColor = hemisphere_light(vNormal, surfaceColor.xyz, surfaceColor.xyz, lightDir, modelMatrix, viewMatrix, vViewPosition);
         alpha = particleColor.w;
     }else{
-        illuminatedColor = wet_effect(surfaceColor.xyz);
+        illuminatedColor = snow_effect(surfaceColor.xyz);
         alpha = 1.0;
     }
     colorFrag = vec4(illuminatedColor, alpha);
@@ -217,6 +217,6 @@ void main()
 
         c = finalColor * ext + fogColor * (1 - insc);
 
-        colorFrag = vec4(c, alpha);
+        colorFrag = vec4(c, 1);
     }
 }

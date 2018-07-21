@@ -71,6 +71,7 @@ GLuint screenWidth = 800, screenHeight = 600;
 // callback functions for keyboard and mouse events
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+
 // if one of the WASD keys is pressed, we call the corresponding method of the Camera class
 void apply_camera_movements();
 
@@ -191,12 +192,14 @@ int main()
 	glCheckError();
 	rainShader = Shader("../progettoGrafica/wet_fog.vert", "../progettoGrafica/wet_fog.frag");
 	glCheckError();
-	snowShader = Shader("../progettoGrafica/normal_fog.vert", "../progettoGrafica/normal_fog.frag");
+	snowShader = Shader("../progettoGrafica/snow_fog.vert", "../progettoGrafica/snow_fog.frag");
 	glCheckError();
 	currentShader = &normalShader;
 
 	normalShader.Use();
 	glCheckError();
+
+	glUniform4fv(glGetUniformLocation(normalShader.Program,"particleColor"), 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
 
 	texture = new Texture("../progettoGrafica/textures/maps/volcano_diff.png");
 	glCheckError();
@@ -218,7 +221,7 @@ int main()
 											//Create and setup the rain particle system
 	ParticleSystem rain(100000, &camera, &rainShader, &rainDropModel, &rainPlane);
 	rain.SetRotationAndScale(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0009f, 0.0009f, 0.002f));
-	rain.SetColor(glm::vec4(122 / 255.0f, 162 / 255.0f, 226 / 255.0f, 0.5f));
+	rain.SetColor(glm::vec4(122 / 255.0f, 162 / 255.0f, 226 / 255.0f, 0.2f));
 	rain.SetDirection(glm::vec3(0.0f, -1.0f, 0.0f));
 	rain.EnableParticleRotation(false);
 
@@ -387,7 +390,6 @@ void apply_camera_movements()
 	if (keys[GLFW_KEY_E])
 		camera.ProcessKeyboard(UP, deltaTime);
 }
-
 
 //////////////////////////////////////////
 // callback for keyboard events
