@@ -28,18 +28,19 @@ Universita' degli Studi di Milano
 #include <glm/gtc/matrix_inverse.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <utils\bulletObject.h>
+
 ///////////////////  Physics class ///////////////////////
 class Physics
 {
 public:
 
     btDiscreteDynamicsWorld* dynamicsWorld; // the main physical simulation class
-    btAlignedObjectArray<btCollisionShape*> collisionShapes; // a vector for all the Collision Shapes of the scene
+    btAlignedObjectArray<bulletObject*> bodies; // a vector for all the Collision Shapes of the scene
     btDefaultCollisionConfiguration* collisionConfiguration; // setup for the collision manager
     btCollisionDispatcher* dispatcher; // collision manager
     btBroadphaseInterface* overlappingPairCache; // method for the broadphase collision detection
     btSequentialImpulseConstraintSolver* solver; // constraints solver
-
 
     //////////////////////////////////////////
     // constructor
@@ -109,8 +110,6 @@ public:
             shape->optimizeConvexHull();
             cShape = shape;
         }
-        // we add this Collision Shape to the vector
-        this->collisionShapes.push_back(cShape);
 
         // We set the initial transformations
         btTransform objTransform;
@@ -149,8 +148,17 @@ public:
         // we create the rigid body
         btRigidBody* body = new btRigidBody(rbInfo);
 
+		// set the collision effect
+		body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+
         //add the body to the dynamics world
         this->dynamicsWorld->addRigidBody(body);
+
+		// we add this Collision Shape to the vector
+		this->bodies.push_back(new bulletObject(body, type, pos, rot));
+
+		// set pointer collision
+		body->setUserPointer(bodies[bodies.size()-1]);
 
         // the function returns a pointer to the created rigid body
         // in a standard simulation (e.g., only objects falling), it is not needed to have a reference to a single rigid body, but in some cases (e.g., the application of an impulse), it is needed.
@@ -176,10 +184,10 @@ public:
         }
 
         // we remove all the Collision Shapes
-        for (int j=0;j<this->collisionShapes.size();j++)
+        for (int j=0;j<this->bodies.size();j++)
         {
-            btCollisionShape* shape = this->collisionShapes[j];
-            this->collisionShapes[j] = 0;
+            btRigidBody* shape = this->bodies[j]->body;
+            this->bodies[j] = 0;
             delete shape;
         }
 
@@ -197,6 +205,6 @@ public:
 
         delete this->collisionConfiguration;
 
-        this->collisionShapes.clear();
+        this->bodies.clear();
     }
 };

@@ -130,6 +130,7 @@
     <None Include="wet_fog.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\utils\bulletObject.h" />
     <ClInclude Include="..\include\utils\camera.h" />
     <ClInclude Include="..\include\utils\gl_error.h" />
     <ClInclude Include="..\include\utils\mesh_v2.h" />

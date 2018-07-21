@@ -68,6 +68,9 @@
     <ClInclude Include="..\include\utils\texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\utils\bulletObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="work06a.cpp">
