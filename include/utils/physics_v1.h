@@ -28,18 +28,19 @@ Universita' degli Studi di Milano
 #include <glm/gtc/matrix_inverse.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <utils\bulletObject.h>
+
 ///////////////////  Physics class ///////////////////////
 class Physics
 {
 public:
 
     btDiscreteDynamicsWorld* dynamicsWorld; // the main physical simulation class
-    btAlignedObjectArray<btCollisionShape*> collisionShapes; // a vector for all the Collision Shapes of the scene
+    btAlignedObjectArray<bulletObject*> bodies; // a vector for all the Collision Shapes of the scene
     btDefaultCollisionConfiguration* collisionConfiguration; // setup for the collision manager
     btCollisionDispatcher* dispatcher; // collision manager
     btBroadphaseInterface* overlappingPairCache; // method for the broadphase collision detection
     btSequentialImpulseConstraintSolver* solver; // constraints solver
-
 
     //////////////////////////////////////////
     // constructor
@@ -70,8 +71,7 @@ public:
     //////////////////////////////////////////
     // Method for the creation of a rigid body, based on a Box or Sphere Collision Shape
    // The Collision Shape is a reference solid that approximates the shape of the actual object of the scene. The Physical simulation is applied to these solids, and the rotations and positions of these solids are used on the real models.
-   btRigidBody* createRigidBody(int type, const char* filename, glm::vec3 pos, glm::vec3 size, glm::vec3 rot, float m, float friction , float restitution)
-    {
+	bulletObject* createRigidBody(ContactType type, const char* filename, glm::vec3 pos, float radius, glm::vec3 rot, float m, float friction , float restitution) {
 
         btCollisionShape* cShape = NULL;
 
@@ -82,20 +82,12 @@ public:
         btQuaternion rotation;
         rotation.setEuler(rot.x,rot.y,rot.z);
 
-        // Box Collision shape
-        if (type == 0)
-        {
-            // we convert the glm vector to a Bullet vector
-            btVector3 dim = btVector3(size.x,size.y,size.z);
-            // BoxShape
-            cShape = new btBoxShape(dim);
-        }
         // Sphere Collision Shape (in this case we consider only the first component)
-        else if (type == 1)
-            cShape = new btSphereShape(size.x);
+        if (type == PARTICLE)
+            cShape = new btSphereShape(radius);
 
         // create the mesh
-        else if (type == 2 && filename != "") {
+        else if (type == MAP) {
             char relativeFilename [1024];
             if (b3ResourcePath::findResourcePath(filename, relativeFilename, 1024)) {
                 char pathPrefix[1024];
@@ -109,8 +101,6 @@ public:
             shape->optimizeConvexHull();
             cShape = shape;
         }
-        // we add this Collision Shape to the vector
-        this->collisionShapes.push_back(cShape);
 
         // We set the initial transformations
         btTransform objTransform;
@@ -133,7 +123,7 @@ public:
         btDefaultMotionState* motionState = new btDefaultMotionState(objTransform);
 
         // we set the data structure for the rigid body
-        btRigidBody::btRigidBodyConstructionInfo rbInfo(mass,motionState,cShape,localInertia);
+        btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, cShape, localInertia);
         // we set friction and restitution
         rbInfo.m_friction = friction;
         rbInfo.m_restitution = restitution;
@@ -149,12 +139,21 @@ public:
         // we create the rigid body
         btRigidBody* body = new btRigidBody(rbInfo);
 
+		// set the collision effect
+		body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+
         //add the body to the dynamics world
         this->dynamicsWorld->addRigidBody(body);
 
+		// we add this Collision Shape to the vector
+		this->bodies.push_back(new bulletObject(body, type, pos, rot));
+
+		// set pointer collision
+		body->setUserPointer(bodies[bodies.size()-1]);
+
         // the function returns a pointer to the created rigid body
         // in a standard simulation (e.g., only objects falling), it is not needed to have a reference to a single rigid body, but in some cases (e.g., the application of an impulse), it is needed.
-        return body;
+        return bodies[bodies.size() - 1];
     }
 
     //////////////////////////////////////////
@@ -171,16 +170,8 @@ public:
             {
                 delete body->getMotionState();
             }
-            this->dynamicsWorld->removeCollisionObject( obj );
+            this->dynamicsWorld->removeCollisionObject(obj);
             delete obj;
-        }
-
-        // we remove all the Collision Shapes
-        for (int j=0;j<this->collisionShapes.size();j++)
-        {
-            btCollisionShape* shape = this->collisionShapes[j];
-            this->collisionShapes[j] = 0;
-            delete shape;
         }
 
         //delete dynamics world
@@ -197,6 +188,6 @@ public:
 
         delete this->collisionConfiguration;
 
-        this->collisionShapes.clear();
+        this->bodies.clear();
     }
 };

@@ -75,6 +75,9 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 // if one of the WASD keys is pressed, we call the corresponding method of the Camera class
 void apply_camera_movements();
 
+// check collision at runtime each frame
+bool ContactAddedCallbackBullet(btManifoldPoint &collisonPoint, const btCollisionObjectWrapper *obj1, int id1, int index1, const btCollisionObjectWrapper *obj2, int id2, int index2);
+
 // we put the code for the models rendering in a separate function, because we will apply 2 rendering steps
 void RenderObjects(Shader &shader, Model &envModel);
 
@@ -250,7 +253,9 @@ int main()
 	glCheckError();
 
 	// added rigidbody map
-	btRigidBody* plane = bulletSimulation.createRigidBody(2, "../progettoGrafica/models/volcano.obj", posMap, glm::vec3(0.0f, 0.0f, 0.0f), rotMap, 0, 0, 0);
+	bulletObject* plane = bulletSimulation.createRigidBody(MAP, "../progettoGrafica/models/volcano.obj", posMap, 0.0f, rotMap, 0, 0, 0);
+	// added callback to check collision
+	gContactAddedCallback = ContactAddedCallbackBullet;
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	// Rendering loop: this code is executed at each frame
@@ -287,6 +292,9 @@ int main()
 		skymap.Update();
 
 		glfwSwapBuffers(window);
+
+		// next check step of physic simulator
+		bulletSimulation.dynamicsWorld->stepSimulation(1 / 60.0f);
 	}
 
 	normalShader.Delete();
@@ -458,4 +466,21 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	// we pass the offset to the Camera class instance in order to update the rendering
 	camera.ProcessMouseMovement(xoffset, yoffset);
 
+}
+
+// check collision at runtime each frame
+bool ContactAddedCallbackBullet(btManifoldPoint &collisonPoint, const btCollisionObjectWrapper *obj1, int id1, int index1, const btCollisionObjectWrapper *obj2, int id2, int index2) {
+	bulletObject* firstObj = (bulletObject*)obj1->getCollisionObject()->getUserPointer();
+	bulletObject* secondObj = (bulletObject*)obj2->getCollisionObject()->getUserPointer();
+	
+	//cout << "Collision " << firstObj->type << " with " << secondObj->type << endl;
+
+	// check collision and set the hit with the map
+	if ((firstObj->type != secondObj->type) && firstObj->type == PARTICLE) {
+		firstObj->hit = true;
+	}
+	else if ((firstObj->type != secondObj->type) && secondObj->type == PARTICLE) {
+		secondObj->hit = true;
+	}
+	return false;
 }
