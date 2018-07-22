@@ -138,7 +138,7 @@ Shader *currentShader;
 
 //Particle systems
 ParticleSystem snow, rain;
-float snowAmount = -1.0f;
+float snowAmount, rainAmount;
 
 /////////////////// MAIN function ///////////////////////
 int main()
@@ -207,6 +207,7 @@ int main()
 	glCheckError();
 
 	glUniform4fv(glGetUniformLocation(normalShader.Program,"particleColor"), 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
+	glCheckError();
 
 	texture = new Texture("../progettoGrafica/textures/maps/volcano_diff.png");
 	glCheckError();
@@ -289,17 +290,27 @@ int main()
 
 		currentShader->Use();
 
+		//update eventual particle shading effect
 		if (particleBools[SNOW_B]) {
 			snowAmount -= deltaTime / 20.0f ;
 			if (snowAmount < -0.98f) snowAmount = -0.98f;
 			glUniform1f(glGetUniformLocation(currentShader->Program, "snowLevel"), snowAmount);
+			glCheckError();
+		}
+		if (particleBools[RAIN_B]) {
+			rainAmount += deltaTime / 10.0f;
+			if (rainAmount > 1.0f) rainAmount = 1.0f;
+			glUniform1f(glGetUniformLocation(currentShader->Program, "wetLevel"), rainAmount);
+			glCheckError();
 		}
 
+		//render map
 		RenderObjects(*currentShader, envModel);
 
 		if (particleBools[RAIN_B]) rain.Update();
 		if (particleBools[SNOW_B]) snow.Update();
 
+		//render sky
 		skymap.Update();
 
 		glfwSwapBuffers(window);
@@ -351,7 +362,14 @@ void SetupShader(Shader &shader) {
 }
 
 void ChangeShader(){
-	if(particleBools[RAIN_B]) currentShader = &rainShader;
+	if (particleBools[RAIN_B]) {
+		currentShader = &rainShader;
+		//setup rain amount
+		currentShader->Use();
+		rainAmount = -0.2f;
+		glUniform1f(glGetUniformLocation(currentShader->Program, "wetLevel"), rainAmount);
+		glCheckError();
+	}
 	else if (particleBools[SNOW_B]) {
 		currentShader = &snowShader;
 		//setup snow amount

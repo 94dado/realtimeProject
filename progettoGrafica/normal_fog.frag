@@ -83,7 +83,6 @@ void main()
     }
     vec3 illuminatedColor = hemisphere_light(vNormal, skyColor.xyz, surfaceColor.xyz, lightDir, modelMatrix, viewMatrix, vViewPosition);
     colorFrag = vec4(illuminatedColor, 1.0);
-    colorFrag = surfaceColor;
     if (fogActive == 1) {
         vec3 texColor = colorFrag.rgb;
 

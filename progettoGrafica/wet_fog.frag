@@ -48,13 +48,16 @@ uniform vec3 eyePosition;
 
 uniform vec4 particleColor; //color of the particle to render
 uniform int hasTexture;     //if true, output color is particleColor
-
+vec4 skyColor = vec4(0.0);
 
 // fog variables
 const vec3 DiffuseLight = vec3(0.15, 0.05, 0.0);
 const vec3 RimColor  = vec3(0.2, 0.2, 0.2);
 const vec3 fogColor = vec3(0.5,0.5,0.5);
 in float distVertex;
+
+//wet effect
+uniform float wetLevel;    //range between [-1, 1]
 
 //all credits goes to: https://github.com/hughsk/glsl-hemisphere-light
 vec3 hemisphere_light(vec3 normal, vec3 sky, vec3 ground,
@@ -115,11 +118,11 @@ float fnoise(vec3 x) {
 //credits:https://github.com/sayakbiswas/wet-surface-glsl
 vec3 wet_effect(vec3 materialDiffuseColor){
     vec3 color;
-    vec3 lightColor = vec3(1, 1, 1);
+    vec3 lightColor = vec3(1.0);
     float lightPower = 50.0;
 
-    vec3 materialAmbientColor = vec3(0.001, 0.001, 0.001) * materialDiffuseColor;
-    vec3 materialSpecularColor = vec3(0.05, 0.05, 0.05);
+    vec3 materialAmbientColor = vec3(0.00001, 0.00001, 0.00001) * materialDiffuseColor;
+    vec3 materialSpecularColor = vec3(0.01, 0.01, 0.01);
 
     float distance = 5.7;
 
@@ -170,20 +173,37 @@ vec3 wet_effect(vec3 materialDiffuseColor){
 void main()
 {
     vec4 surfaceColor;
+    //hasTexture == 0 => rendering a particle. use particlecolor as base color
     if (hasTexture == 0) {
         surfaceColor = particleColor;
     }
+    //hasTexture == 1 => rendering map. Use texture color as base color
     else{
         vec2 repeated_Uv = mod(interp_UV*repeat, 1.0);
         surfaceColor = texture(tex, repeated_Uv);
     }
     vec3 illuminatedColor;
     float alpha;
+    //hasTexture == 0 => rendering a particle. Calculate hemisphere lighting
     if(hasTexture == 0){
         illuminatedColor = hemisphere_light(vNormal, surfaceColor.xyz, surfaceColor.xyz, lightDir, modelMatrix, viewMatrix, vViewPosition);
         alpha = particleColor.w;
-    }else{
-        illuminatedColor = wet_effect(surfaceColor.xyz);
+    }
+    //hasTexture == 1 => rendering map. Mix hemisphere light and wet effect
+    else{
+        if(wetLevel >= 1.0){
+            //already saturated to wet
+            illuminatedColor = wet_effect(surfaceColor.xyz);
+        }else if (wetLevel <= 0.0){
+            //still saturated to dry
+            illuminatedColor = hemisphere_light(vNormal, skyColor.xyz, surfaceColor.xyz, lightDir, modelMatrix, viewMatrix, vViewPosition);
+        }else{
+            //the final color is the "lerp" between dry and wet, using "wetLevel" as weight
+            vec3 hl = hemisphere_light(vNormal, skyColor.xyz, surfaceColor.xyz, lightDir, modelMatrix, viewMatrix, vViewPosition);
+            vec3 wet = wet_effect(surfaceColor.xyz);
+
+            illuminatedColor = mix(hl, wet, wetLevel);
+        }
         alpha = 1.0;
     }
     colorFrag = vec4(illuminatedColor, alpha);
