@@ -54,9 +54,7 @@ uniform int hasTexture;     //if true, output color is particleColor
 const vec3 DiffuseLight = vec3(0.15, 0.05, 0.0);
 const vec3 RimColor  = vec3(0.2, 0.2, 0.2);
 const vec3 fogColor = vec3(0.5,0.5,0.5);
-
-//wet effect constants
-float distVertex = 5.7;
+in float distVertex;
 
 //all credits goes to: https://github.com/hughsk/glsl-hemisphere-light
 vec3 hemisphere_light(vec3 normal, vec3 sky, vec3 ground,
@@ -123,7 +121,7 @@ vec3 wet_effect(vec3 materialDiffuseColor){
     vec3 materialAmbientColor = vec3(0.001, 0.001, 0.001) * materialDiffuseColor;
     vec3 materialSpecularColor = vec3(0.05, 0.05, 0.05);
 
-    float distance = distVertex;
+    float distance = 5.7;
 
     vec3 n = normalize(vNormal);
     vec3 l = normalize(lightDir);

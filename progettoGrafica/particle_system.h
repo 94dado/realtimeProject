@@ -39,6 +39,7 @@ public:
 	FixedYPlane *spawnPlane;
 	glm::vec3 direction;
 	
+	ParticleSystem();
 	ParticleSystem(int maxP, Camera* camera, Shader *shader, Model *model, FixedYPlane *plane);
 	void SetRotationAndScale(float degree, glm::vec3 axes, glm::vec3 scale);
 	void SetColor(glm::vec4 color);
@@ -169,6 +170,8 @@ void ParticleSystem::DrawParticles(){
 	glDisable(GL_BLEND);
 	glCheckError();
 }
+
+ParticleSystem::ParticleSystem() {}
 
 ParticleSystem::ParticleSystem(int maxP, Camera* camera, Shader *shader, Model *model, FixedYPlane *plane){
 	this->maxParticles = maxP;

@@ -136,6 +136,10 @@ Physics bulletSimulation;
 Shader normalShader, rainShader, snowShader;
 Shader *currentShader;
 
+//Particle systems
+ParticleSystem snow, rain;
+float snowAmount = -1.0f;
+
 /////////////////// MAIN function ///////////////////////
 int main()
 {
@@ -222,14 +226,14 @@ int main()
 	FixedYPlane rainPlane(min, max, 20.0f);	//min, maxe and y values
 
 											//Create and setup the rain particle system
-	ParticleSystem rain(100000, &camera, &rainShader, &rainDropModel, &rainPlane);
+	rain = ParticleSystem(100000, &camera, &rainShader, &rainDropModel, &rainPlane);
 	rain.SetRotationAndScale(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0009f, 0.0009f, 0.002f));
 	rain.SetColor(glm::vec4(122 / 255.0f, 162 / 255.0f, 226 / 255.0f, 0.2f));
 	rain.SetDirection(glm::vec3(0.0f, -1.0f, 0.0f));
 	rain.EnableParticleRotation(false);
 
 	//Create and setup the snow particle system : NOT FINISHED, parameters are wrong!!!
-	ParticleSystem snow(10000, &camera, &snowShader, &snowFlakeModel, &rainPlane);
+	snow = ParticleSystem(10000, &camera, &snowShader, &snowFlakeModel, &rainPlane);
 	snow.SetRotationAndScale(0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.8f, 0.8f, 0.8f));
 	snow.SetColor(glm::vec4(1.0f, 1.0f, 1.0f, 0.7f));
 	snow.SetDirection(glm::vec3(0.0f, -1.0f, 0.0f));
@@ -284,6 +288,13 @@ int main()
 		SetupShader(normalShader);
 
 		currentShader->Use();
+
+		if (particleBools[SNOW_B]) {
+			snowAmount -= deltaTime / 20.0f ;
+			if (snowAmount < -0.98f) snowAmount = -0.98f;
+			glUniform1f(glGetUniformLocation(currentShader->Program, "snowLevel"), snowAmount);
+		}
+
 		RenderObjects(*currentShader, envModel);
 
 		if (particleBools[RAIN_B]) rain.Update();
@@ -341,7 +352,16 @@ void SetupShader(Shader &shader) {
 
 void ChangeShader(){
 	if(particleBools[RAIN_B]) currentShader = &rainShader;
-	else if(particleBools[SNOW_B]) currentShader = &snowShader;
+	else if (particleBools[SNOW_B]) {
+		currentShader = &snowShader;
+		//setup snow amount
+		currentShader->Use();
+		glUniform3f(glGetUniformLocation(currentShader->Program, "snowDirection"), snow.direction.x, snow.direction.y, snow.direction.z);
+		glCheckError();
+		snowAmount = -0.2f;
+		glUniform1f(glGetUniformLocation(currentShader->Program, "snowLevel"), snowAmount);
+		glCheckError();
+	}
 	else currentShader = &normalShader;
 }
 

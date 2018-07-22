@@ -53,6 +53,9 @@ out vec3 worldNormal;
 //output variables needed from wet code
 out vec4 localVertexPosition;
 
+//for fog
+out float distVertex;
+
 //inverse, used by wet code
 mat4 inverseP = inverse(projectionMatrix);
 mat4 inverseV = inverse(viewMatrix);
@@ -78,6 +81,8 @@ void main(){
   // I assign the values to a variable with "out" qualifier so to use the per-fragment interpolated values in the Fragment shader
   interp_UV = UV;
 
+  // range based FOV
+	distVertex = abs(mvPosition.z);
 
   //local space vertex position and normal, needed from "wet effect"
   localVertexPosition = vec4(position,1.0) * inverseV * inverseP;

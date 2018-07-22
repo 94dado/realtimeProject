@@ -42,10 +42,11 @@ uniform float repeat;
 // texture sampler
 uniform sampler2D tex;
 
-// check fog
+//fog variables
 uniform int fogActive;
 uniform vec3 eyePosition;
 
+//particles and textures variables
 uniform vec4 particleColor; //color of the particle to render
 uniform int hasTexture;     //if true, output color is particleColor
 
@@ -54,9 +55,11 @@ uniform int hasTexture;     //if true, output color is particleColor
 const vec3 DiffuseLight = vec3(0.15, 0.05, 0.0);
 const vec3 RimColor  = vec3(0.2, 0.2, 0.2);
 const vec3 fogColor = vec3(0.5,0.5,0.5);
+in float distVertex;
 
-//wet effect constants
-float distVertex = 4;
+//snow effect constants
+uniform vec3 snowDirection;
+uniform float snowLevel;    //range between [-1, 1]
 
 //all credits goes to: https://github.com/hughsk/glsl-hemisphere-light
 vec3 hemisphere_light(vec3 normal, vec3 sky, vec3 ground,
@@ -115,80 +118,43 @@ float fnoise(vec3 x) {
 }
 
 
-vec3 snow_effect(vec3 materialDiffuseColor){
-    vec3 color;
-    vec3 lightColor = vec3(1, 1, 1);
-    float lightPower = 50.0;
-
-    vec3 materialAmbientColor = vec3(0.1, 0.1, 0.1) * materialDiffuseColor;
-    vec3 materialSpecularColor = vec3(1,1,1);
-
-    float distance = distVertex;
-
-    vec3 n = normalize(vNormal);
-    vec3 l = normalize(lightDir);
-
-    //Generating a bump map from noise
-    float inz = fnoise(localVertexPosition.xyz) * 0.5 + 0.5;
-    float E = 0.001;
-
-    vec3 px = localVertexPosition.xyz;
-    px.x += E;
-    vec3 py = localVertexPosition.xyz;
-    py.y += E;
-    vec3 pz = localVertexPosition.xyz;
-    pz.z += E;
-
-    vec3 bump = vec3(fnoise(px)*0.5+0.5, fnoise(py)*0.5+0.5, fnoise(pz)*0.5+0.5);
-    vec3 pN = vec3((bump.x-inz)/E, (bump.y-inz)/E, (bump.z-inz)/E);
-
-    n = normalize(n - pN);
-
-    float cosTheta = clamp(dot(n, l), 0, 1);
-
-    vec3 e = normalize(vViewPosition);
-    vec3 r = reflect(-l, n);
-
-    float cosAlpha = clamp(dot(e,r), 0, 1);
-
-    float F0 = 0.5;
-    vec3 h = normalize(e+l);
-    float base = 1 - dot(e, h);
-    float exponential = pow(base, 5.0);
-    float fresnel = exponential + F0 * (1.0 - exponential);
-
-
-    color = materialAmbientColor
-	    + 0.5 * (materialDiffuseColor * lightColor) * lightPower * cosTheta / (distance * distance)
-	    + ((materialSpecularColor * lightColor) * basicNoise(localVertexPosition.xy) * 20
-		* lightPower * pow(max(0.0, cosAlpha), 200) / (distance * distance))
-		* fresnel;
-
-    color = clamp(color, 0., 1.);
-    return color;
-}
-
-
 void main()
 {
+    //hasTexture == 0 => it's a particle
     vec4 surfaceColor;
+    float alpha;
+    //check if i need to draw snow on the map
+    bool enoughSnow = dot(normalize(worldNormal), snowDirection) >= snowLevel;
+    //hasTexture == 0 => rendering particle
     if (hasTexture == 0) {
         surfaceColor = particleColor;
+        alpha = surfaceColor.a;
     }
+    //hasTexture == 1 => map, get data from texture
     else{
-        vec2 repeated_Uv = mod(interp_UV*repeat, 1.0);
-        surfaceColor = texture(tex, repeated_Uv);
+        //enoughSnow => render snow effect
+        if(enoughSnow){
+            surfaceColor = particleColor;
+            alpha = 1.0;
+        }else{
+            //!enoughSnow => render texture
+            vec2 repeated_Uv = mod(interp_UV*repeat, 1.0);
+            surfaceColor = texture(tex, repeated_Uv);
+            alpha = 1.0;
+        }
     }
+    //illuminatedColor is rgb component of final color, alpha only the a channel
     vec3 illuminatedColor;
-    float alpha;
-    if(hasTexture == 0){
+    if(hasTexture == 0 ){
+        //for the particle (and low level snow), we use hemisphere lighting
         illuminatedColor = hemisphere_light(vNormal, surfaceColor.xyz, surfaceColor.xyz, lightDir, modelMatrix, viewMatrix, vViewPosition);
-        alpha = particleColor.w;
     }else{
-        illuminatedColor = snow_effect(surfaceColor.xyz);
-        alpha = 1.0;
+        //for texture, we use snow effect
+        illuminatedColor = surfaceColor.rgb;
     }
+    //finally set output color variable
     colorFrag = vec4(illuminatedColor, alpha);
+    //if fog is enabled, we draw fog (not working with snow)
     if (fogActive == 1) {
         vec3 texColor = colorFrag.rgb;
 
