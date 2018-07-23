@@ -41,6 +41,7 @@ public:
     btCollisionDispatcher* dispatcher; // collision manager
     btBroadphaseInterface* overlappingPairCache; // method for the broadphase collision detection
     btSequentialImpulseConstraintSolver* solver; // constraints solver
+	btRigidBody* map;
 
     //////////////////////////////////////////
     // constructor
@@ -65,13 +66,13 @@ public:
         this->dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,overlappingPairCache,solver,collisionConfiguration);
 
         // we set the gravity force
-        this->dynamicsWorld->setGravity(btVector3(0,-9.82,0));
+        this->dynamicsWorld->setGravity(btVector3(0,-100,0));
     }
 
     //////////////////////////////////////////
     // Method for the creation of a rigid body, based on a Box or Sphere Collision Shape
    // The Collision Shape is a reference solid that approximates the shape of the actual object of the scene. The Physical simulation is applied to these solids, and the rotations and positions of these solids are used on the real models.
-	bulletObject* createRigidBody(ContactType type, const char* filename, glm::vec3 pos, float radius, glm::vec3 rot, float m, float friction , float restitution) {
+	bulletObject* createRigidBody(ContactType type, const char* filename, glm::vec3 pos, float radius, glm::vec3 rot, float m, float friction , float restitution, glm::vec3 scale) {
 
         btCollisionShape* cShape = NULL;
 
@@ -88,18 +89,20 @@ public:
 
         // create the mesh
         else if (type == MAP) {
-            char relativeFilename [1024];
-            if (b3ResourcePath::findResourcePath(filename, relativeFilename, 1024)) {
-                char pathPrefix[1024];
-                b3FileUtils::extractPath(relativeFilename, pathPrefix, 1024);
-            }
-            // load mesh from .obj
-            GLInstanceGraphicsShape* glmesh = LoadMeshFromObj(relativeFilename, "");
-            // generate convex hull by vertices
-            const GLInstanceVertex& v = glmesh->m_vertices->at(0);
-            btConvexHullShape* shape = new btConvexHullShape((const btScalar*)(&(v.xyzw[0])), glmesh->m_numvertices, sizeof(GLInstanceVertex));
-            shape->optimizeConvexHull();
-            cShape = shape;
+			char relativeFilename[1024];
+			if (b3ResourcePath::findResourcePath(filename, relativeFilename, 1024)) {
+				char pathPrefix[1024];
+				b3FileUtils::extractPath(relativeFilename, pathPrefix, 1024);
+			}
+			// load mesh from .obj
+			GLInstanceGraphicsShape* glmesh = LoadMeshFromObj(relativeFilename, "");
+			// generate convex hull by vertices
+			const GLInstanceVertex& v = glmesh->m_vertices->at(0);
+			btConvexHullShape* shape = new btConvexHullShape((const btScalar*)(&(v.xyzw[0])), glmesh->m_numvertices, sizeof(GLInstanceVertex));
+			shape->optimizeConvexHull();
+			cShape = shape;
+
+			cShape->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
         }
 
         // We set the initial transformations
@@ -121,7 +124,7 @@ public:
         // we initialize the Motion State of the object on the basis of the transformations
         // Using the Motion State, the physical simulation will calculate the positions and rotations of the rigid body
         btDefaultMotionState* motionState = new btDefaultMotionState(objTransform);
-
+		
         // we set the data structure for the rigid body
         btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, cShape, localInertia);
         // we set friction and restitution
@@ -129,7 +132,7 @@ public:
         rbInfo.m_restitution = restitution;
 
         // if the Collision Shape is a sphere
-        if (type == 1){
+        if (type == PARTICLE){
             // the sphere touches the plane on the plane on a single point, and thus the friction between sphere and the plane does not works -> the sphere does not stop
             // To avoid the problem, we apply the rolling friction together with an angular damping (which applies a resistence during the rolling movement), in order to make the sphere to stop after a while
             rbInfo.m_angularDamping =0.3;
@@ -138,15 +141,18 @@ public:
 
         // we create the rigid body
         btRigidBody* body = new btRigidBody(rbInfo);
-
 		// set the collision effect
 		body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+		if (type == MAP) {
+			dynamicsWorld->updateAabbs();
+			map = body;
+		}
 
         //add the body to the dynamics world
         this->dynamicsWorld->addRigidBody(body);
 
 		// we add this Collision Shape to the vector
-		this->bodies.push_back(new bulletObject(body, type, pos, rot));
+		this->bodies.push_back(new bulletObject(body, type, NULL));
 
 		// set pointer collision
 		body->setUserPointer(bodies[bodies.size()-1]);
@@ -156,23 +162,28 @@ public:
         return bodies[bodies.size() - 1];
     }
 
+	void ClearRbs() {
+		//we remove the rigid bodies from the dynamics world and delete them
+		for (int i = this->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+		{
+			// we remove all the Motion States
+			btCollisionObject* obj = this->dynamicsWorld->getCollisionObjectArray()[i];
+			btRigidBody* body = btRigidBody::upcast(obj);
+			if (body != map) {
+				if (body && body->getMotionState()) {
+					delete body->getMotionState();
+				}
+				this->dynamicsWorld->removeCollisionObject(obj);
+				delete obj;
+			}
+		}
+	}
+
     //////////////////////////////////////////
     // We delete the data of the physical simulation when the program ends
-    void Clear()
-    {
-        //we remove the rigid bodies from the dynamics world and delete them
-        for (int i=this->dynamicsWorld->getNumCollisionObjects()-1; i>=0 ;i--)
-        {
-            // we remove all the Motion States
-            btCollisionObject* obj = this->dynamicsWorld->getCollisionObjectArray()[i];
-            btRigidBody* body = btRigidBody::upcast(obj);
-            if (body && body->getMotionState())
-            {
-                delete body->getMotionState();
-            }
-            this->dynamicsWorld->removeCollisionObject(obj);
-            delete obj;
-        }
+    void Clear() {
+
+		ClearRbs();
 
         //delete dynamics world
         delete this->dynamicsWorld;
