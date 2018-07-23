@@ -144,6 +144,9 @@
     <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\OpenGLWindow\opengl_fontstashcallbacks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\bullet\examples\CommonInterfaces\CommonExampleInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="D:\Desktop\progettoGrafica\include\bullet\examples\OpenGLWindow\CMakeLists.txt" />

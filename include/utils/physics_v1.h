@@ -71,7 +71,7 @@ public:
     //////////////////////////////////////////
     // Method for the creation of a rigid body, based on a Box or Sphere Collision Shape
    // The Collision Shape is a reference solid that approximates the shape of the actual object of the scene. The Physical simulation is applied to these solids, and the rotations and positions of these solids are used on the real models.
-	bulletObject* createRigidBody(ContactType type, const char* filename, glm::vec3 pos, float radius, glm::vec3 rot, float m, float friction , float restitution) {
+	bulletObject* createRigidBody(ContactType type, const char* filename, glm::vec3 pos, float radius, glm::vec3 rot, float m, float friction , float restitution, glm::vec3 scale) {
 
         btCollisionShape* cShape = NULL;
 
@@ -88,18 +88,7 @@ public:
 
         // create the mesh
         else if (type == MAP) {
-            char relativeFilename [1024];
-            if (b3ResourcePath::findResourcePath(filename, relativeFilename, 1024)) {
-                char pathPrefix[1024];
-                b3FileUtils::extractPath(relativeFilename, pathPrefix, 1024);
-            }
-            // load mesh from .obj
-            GLInstanceGraphicsShape* glmesh = LoadMeshFromObj(relativeFilename, "");
-            // generate convex hull by vertices
-            const GLInstanceVertex& v = glmesh->m_vertices->at(0);
-            btConvexHullShape* shape = new btConvexHullShape((const btScalar*)(&(v.xyzw[0])), glmesh->m_numvertices, sizeof(GLInstanceVertex));
-            shape->optimizeConvexHull();
-            cShape = shape;
+			cShape = new btBoxShape(btVector3(160.0f,0.1f,160.0f));
         }
 
         // We set the initial transformations
@@ -108,6 +97,10 @@ public:
         objTransform.setRotation(rotation);
         // we set the initial position (it must be equal to the position of the corresponding model of the scene)
         objTransform.setOrigin(position);
+		if (type == MAP) {
+			glm::vec3 o(objTransform.getOrigin()[0], objTransform.getOrigin()[1], objTransform.getOrigin()[2]);
+			cout << glm::to_string(o) << endl;
+		}
 
         // if objects has mass = 0 -> then it is static (it does not move and it is not subject to forces)
         btScalar mass = m;
@@ -129,7 +122,7 @@ public:
         rbInfo.m_restitution = restitution;
 
         // if the Collision Shape is a sphere
-        if (type == 1){
+        if (type == PARTICLE){
             // the sphere touches the plane on the plane on a single point, and thus the friction between sphere and the plane does not works -> the sphere does not stop
             // To avoid the problem, we apply the rolling friction together with an angular damping (which applies a resistence during the rolling movement), in order to make the sphere to stop after a while
             rbInfo.m_angularDamping =0.3;
@@ -138,15 +131,15 @@ public:
 
         // we create the rigid body
         btRigidBody* body = new btRigidBody(rbInfo);
-
-		// set the collision effect
-		body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+		if (type == MAP) {
+			dynamicsWorld->updateAabbs();
+		}
 
         //add the body to the dynamics world
         this->dynamicsWorld->addRigidBody(body);
 
 		// we add this Collision Shape to the vector
-		this->bodies.push_back(new bulletObject(body, type, pos, rot));
+		this->bodies.push_back(new bulletObject(body, type, NULL));
 
 		// set pointer collision
 		body->setUserPointer(bodies[bodies.size()-1]);

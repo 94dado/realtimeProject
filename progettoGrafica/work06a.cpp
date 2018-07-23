@@ -120,6 +120,7 @@ glm::mat4 projection;
 // position and rotation map
 glm::vec3 posMap = glm::vec3(0.0f, -30.0f, 0.0f);
 glm::vec3 rotMap = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 scaleMap = glm::vec3(0.0005f, 0.0005f, 0.0005f);
 
 // boolean to handle show particle systems
 #define RAIN_B 0
@@ -227,14 +228,14 @@ int main()
 	FixedYPlane rainPlane(min, max, 20.0f);	//min, maxe and y values
 
 											//Create and setup the rain particle system
-	rain = ParticleSystem(100000, &camera, &rainShader, &rainDropModel, &rainPlane);
+	rain = ParticleSystem(1000, &camera, &rainShader, &rainDropModel, &rainPlane, &bulletSimulation);
 	rain.SetRotationAndScale(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0009f, 0.0009f, 0.002f));
 	rain.SetColor(glm::vec4(122 / 255.0f, 162 / 255.0f, 226 / 255.0f, 0.2f));
 	rain.SetDirection(glm::vec3(0.0f, -1.0f, 0.0f));
 	rain.EnableParticleRotation(false);
 
 	//Create and setup the snow particle system : NOT FINISHED, parameters are wrong!!!
-	snow = ParticleSystem(10000, &camera, &snowShader, &snowFlakeModel, &rainPlane);
+	snow = ParticleSystem(10000, &camera, &snowShader, &snowFlakeModel, &rainPlane, &bulletSimulation);
 	snow.SetRotationAndScale(0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.8f, 0.8f, 0.8f));
 	snow.SetColor(glm::vec4(1.0f, 1.0f, 1.0f, 0.7f));
 	snow.SetDirection(glm::vec3(0.0f, -1.0f, 0.0f));
@@ -245,7 +246,7 @@ int main()
 	particleBools.push_back(false);	//RAIN_B
 	particleBools.push_back(false);	//SNOW_B
 
-									//setup skymap 
+	//setup skymap 
 	SkyMap skymap(&camera, projection,
 		&"../progettoGrafica/textures/sky/negz.jpg"[0],  //front 
 		&"../progettoGrafica/textures/sky/posz.jpg"[0],  //back 
@@ -258,7 +259,7 @@ int main()
 	glCheckError();
 
 	// added rigidbody map
-	bulletObject* plane = bulletSimulation.createRigidBody(MAP, "../progettoGrafica/models/volcano.obj", posMap, 0.0f, rotMap, 0, 0, 0);
+	bulletObject* mapBullet = bulletSimulation.createRigidBody(MAP, "../progettoGrafica/models/volcano.obj", posMap, 0.0f, rotMap, 0, 0.2, 0.3, scaleMap);
 	// added callback to check collision
 	gContactAddedCallback = ContactAddedCallbackBullet;
 
@@ -292,7 +293,7 @@ int main()
 
 		//update eventual particle shading effect
 		if (particleBools[SNOW_B]) {
-			snowAmount -= deltaTime / 20.0f ;
+			snowAmount -= deltaTime / 30.0f ;
 			if (snowAmount < -0.98f) snowAmount = -0.98f;
 			glUniform1f(glGetUniformLocation(currentShader->Program, "snowLevel"), snowAmount);
 			glCheckError();
@@ -316,7 +317,7 @@ int main()
 		glfwSwapBuffers(window);
 
 		// next check step of physic simulator
-		bulletSimulation.dynamicsWorld->stepSimulation(1 / 60.0f);
+		bulletSimulation.dynamicsWorld->stepSimulation(1 / 60.0f, 1/6.0F);
 	}
 
 	normalShader.Delete();
@@ -376,7 +377,7 @@ void ChangeShader(){
 		currentShader->Use();
 		glUniform3f(glGetUniformLocation(currentShader->Program, "snowDirection"), snow.direction.x, snow.direction.y, snow.direction.z);
 		glCheckError();
-		snowAmount = -0.2f;
+		snowAmount = -0.1f;
 		glUniform1f(glGetUniformLocation(currentShader->Program, "snowLevel"), snowAmount);
 		glCheckError();
 	}
@@ -407,7 +408,7 @@ void RenderObjects(Shader &shader, Model&envModel)
 	glm::mat3 envNormalMatrix;
 	envModelMatrix = glm::translate(envModelMatrix, posMap);
 	envModelMatrix = glm::rotate(envModelMatrix, glm::radians(1.0f), rotMap);
-	envModelMatrix = glm::scale(envModelMatrix, glm::vec3(0.0005f, 0.0005f, 0.0005f));
+	envModelMatrix = glm::scale(envModelMatrix, scaleMap);
 
 	envNormalMatrix = glm::inverseTranspose(glm::mat3(view*envModelMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(envModelMatrix));
@@ -511,14 +512,19 @@ bool ContactAddedCallbackBullet(btManifoldPoint &collisonPoint, const btCollisio
 	bulletObject* firstObj = (bulletObject*)obj1->getCollisionObject()->getUserPointer();
 	bulletObject* secondObj = (bulletObject*)obj2->getCollisionObject()->getUserPointer();
 	
-	//cout << "Collision " << firstObj->type << " with " << secondObj->type << endl;
+	cout << "Collision " << firstObj->type << " with " << secondObj->type << endl;
 
 	// check collision and set the hit with the map
-	if ((firstObj->type != secondObj->type) && firstObj->type == PARTICLE) {
-		firstObj->hit = true;
-	}
-	else if ((firstObj->type != secondObj->type) && secondObj->type == PARTICLE) {
-		secondObj->hit = true;
+	if (firstObj->type != secondObj->type) {
+		if (firstObj->type == PARTICLE) {
+
+			firstObj->particle->alive = false;
+			firstObj->particle->cameraDistance = -1.0f;
+		}
+		else if (secondObj->type == PARTICLE) {
+			secondObj->particle->alive = false;
+			secondObj->particle->cameraDistance = -1.0f;
+		}
 	}
 	return false;
 }

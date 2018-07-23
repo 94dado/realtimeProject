@@ -26,6 +26,7 @@ private:
 	bool isEnabledRandomRotation;
 	glm::vec3 rotationAxes, scaleVec;
 	GLint modelID, normalID;
+	Physics *physic;
 	
 	void Render();
 	int FindUnusedParticle();
@@ -40,7 +41,7 @@ public:
 	glm::vec3 direction;
 	
 	ParticleSystem();
-	ParticleSystem(int maxP, Camera* camera, Shader *shader, Model *model, FixedYPlane *plane);
+	ParticleSystem(int maxP, Camera* camera, Shader *shader, Model *model, FixedYPlane *plane, Physics *physic);
 	void SetRotationAndScale(float degree, glm::vec3 axes, glm::vec3 scale);
 	void SetColor(glm::vec4 color);
 	void SetDirection(glm::vec3 direction);
@@ -78,14 +79,26 @@ void ParticleSystem::Render(){
 // Finds a Particle in ParticlesContainer which isn't used yet
 int ParticleSystem::FindUnusedParticle() {
 	for(int i=lastUsedParticle; i<maxParticles; i++){
-		if (particlesContainer[i].life <= 0.0f){
+		if (!particlesContainer[i].alive){
 			lastUsedParticle = i;
+			Particle &p = particlesContainer[i];
+			if (p.rb == NULL) {
+				bulletObject *rigidBody = physic->createRigidBody(PARTICLE, "", p.pos, 0.2f, glm::vec3(0.0f, p.rotationDegree, 0.0f), 1.0f, 0.2f, 0.3f, glm::vec3(0));
+				rigidBody->particle = &p;
+				p.rb = rigidBody->body;
+			}
 			return i;
 		}
 	}
 	for(int i=0; i<lastUsedParticle; i++){
-		if (particlesContainer[i].life <= 0.0f){
+		if (!particlesContainer[i].alive){
 			lastUsedParticle = i;
+			Particle &p = particlesContainer[i];
+			if (p.rb == NULL) {
+				bulletObject *rigidBody = physic->createRigidBody(PARTICLE, "", p.pos, 0.2f, glm::vec3(0.0f, p.rotationDegree, 0.0f), 1.0f, 0.2f, 0.3f, glm::vec3(0));
+				rigidBody->particle = &p;
+				p.rb = rigidBody->body;
+			}
 			return i;
 		}
 	}
@@ -112,13 +125,21 @@ void ParticleSystem::SetupParticles(){
 		int particleIndex = FindUnusedParticle();
 		Particle &p = particlesContainer[particleIndex];
 		
-		p.life = LIFETIME; 
+		p.alive = true;
 		p.pos = spawnPlane->RandomPoint();
-		p.speed = p.speed = glm::vec3(0.0f, 9.81f, 0.0f);	//static speed: no direction, only speed
 		if(isEnabledRandomRotation){
 				p.rotationDegree = FixedYPlane::RandomFloat() * widthRandomRotationDegree + minRandomRotation;
 		}
-		
+		else {
+			p.rotationDegree = 0.0f;
+		}
+		//TODO setup rigidbody
+		btTransform transform;
+		transform.setOrigin(btVector3(p.pos.x, p.pos.y, p.pos.z));
+		btQuaternion q;
+		q.setEuler(0.0f, p.rotationDegree, 0.0f);
+		transform.setRotation(q);
+		p.rb->setWorldTransform(transform);
 	}
 }
 	
@@ -128,18 +149,12 @@ void ParticleSystem::UpdateParticles(){
 	int particlesCount = 0;
 	for(int i=0; i<maxParticles; i++){
 		Particle& p = particlesContainer[i];
-		if(p.life > 0.0f){
-			// Decrease life
-			p.life -= delta;
-			if (p.life > 0.0f){
-				// update position
-				p.pos += p.speed * direction * (float)delta;
-				p.cameraDistance = glm::length( p.pos - camera->Position );
-				p.toDraw = true;
-			}else{
-				// Particles that just died will be put at the end of the buffer in SortParticles();
-				p.cameraDistance = -1.0f;
-			}
+		if(p.alive){
+			// update position
+			btVector3 rbPos = p.rb->getWorldTransform().getOrigin();
+			p.pos = glm::vec3(rbPos[0], rbPos[1], rbPos[2]);
+			p.cameraDistance = glm::length( p.pos - camera->Position );
+			p.toDraw = true;
 		}
 	}
 	lastTime = currentTime;
@@ -173,12 +188,13 @@ void ParticleSystem::DrawParticles(){
 
 ParticleSystem::ParticleSystem() {}
 
-ParticleSystem::ParticleSystem(int maxP, Camera* camera, Shader *shader, Model *model, FixedYPlane *plane){
+ParticleSystem::ParticleSystem(int maxP, Camera* camera, Shader *shader, Model *model, FixedYPlane *plane, Physics *physic){
 	this->maxParticles = maxP;
 	this->camera = camera;
 	this->shader = shader;
 	this->model = model;
 	this->spawnPlane = plane;
+	this->physic = physic;
 	
 	direction = glm::vec3(0,0,0);		//no initial movement
 	lastUsedParticle = 0;
@@ -189,6 +205,7 @@ ParticleSystem::ParticleSystem(int maxP, Camera* camera, Shader *shader, Model *
 	
 	for(int i=0; i < maxParticles; i++){
 		Particle p;
+		p.rb = NULL;
 		particlesContainer.push_back(p);
 	}
 }

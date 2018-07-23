@@ -307,6 +307,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\OpenGLWindow\TwFonts.cpp" />
     <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\OpenGLWindow\fontstash.cpp" />
     <ClCompile Include="D:\Desktop\progettoGrafica\include\bullet\examples\OpenGLWindow\opengl_fontstashcallbacks.cpp" />
+    <ClInclude Include="..\..\..\include\bullet\examples\CommonInterfaces\CommonExampleInterface.h" />
     <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\OpenGLWindow\EGLOpenGLWindow.h" />
     <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\OpenGLWindow\GLFWOpenGLWindow.h" />
     <ClInclude Include="D:\Desktop\progettoGrafica\include\bullet\examples\OpenGLWindow\GLInstanceGraphicsShape.h" />

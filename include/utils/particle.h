@@ -6,16 +6,18 @@
 class Particle {
 public:
 	glm::vec3 pos, speed;
-	float life;	//if <0: particle unused
+	bool alive;
 	float cameraDistance;
 	bool toDraw;
 	float rotationDegree;
+	btRigidBody *rb;
 	
 	Particle(){
-		life = 0.0;
+		alive = false;
 		cameraDistance = 0.0f;
 		toDraw = false;
 		rotationDegree = 0.0f;
+		rb = NULL;
 	}
 	
 	bool operator <(const Particle& that){
