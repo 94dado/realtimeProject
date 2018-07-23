@@ -41,6 +41,7 @@ public:
     btCollisionDispatcher* dispatcher; // collision manager
     btBroadphaseInterface* overlappingPairCache; // method for the broadphase collision detection
     btSequentialImpulseConstraintSolver* solver; // constraints solver
+	btRigidBody* map;
 
     //////////////////////////////////////////
     // constructor
@@ -65,7 +66,7 @@ public:
         this->dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,overlappingPairCache,solver,collisionConfiguration);
 
         // we set the gravity force
-        this->dynamicsWorld->setGravity(btVector3(0,-9.82,0));
+        this->dynamicsWorld->setGravity(btVector3(0,-100,0));
     }
 
     //////////////////////////////////////////
@@ -88,7 +89,20 @@ public:
 
         // create the mesh
         else if (type == MAP) {
-			cShape = new btBoxShape(btVector3(160.0f,0.1f,160.0f));
+			char relativeFilename[1024];
+			if (b3ResourcePath::findResourcePath(filename, relativeFilename, 1024)) {
+				char pathPrefix[1024];
+				b3FileUtils::extractPath(relativeFilename, pathPrefix, 1024);
+			}
+			// load mesh from .obj
+			GLInstanceGraphicsShape* glmesh = LoadMeshFromObj(relativeFilename, "");
+			// generate convex hull by vertices
+			const GLInstanceVertex& v = glmesh->m_vertices->at(0);
+			btConvexHullShape* shape = new btConvexHullShape((const btScalar*)(&(v.xyzw[0])), glmesh->m_numvertices, sizeof(GLInstanceVertex));
+			shape->optimizeConvexHull();
+			cShape = shape;
+
+			cShape->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
         }
 
         // We set the initial transformations
@@ -97,10 +111,6 @@ public:
         objTransform.setRotation(rotation);
         // we set the initial position (it must be equal to the position of the corresponding model of the scene)
         objTransform.setOrigin(position);
-		if (type == MAP) {
-			glm::vec3 o(objTransform.getOrigin()[0], objTransform.getOrigin()[1], objTransform.getOrigin()[2]);
-			cout << glm::to_string(o) << endl;
-		}
 
         // if objects has mass = 0 -> then it is static (it does not move and it is not subject to forces)
         btScalar mass = m;
@@ -114,7 +124,7 @@ public:
         // we initialize the Motion State of the object on the basis of the transformations
         // Using the Motion State, the physical simulation will calculate the positions and rotations of the rigid body
         btDefaultMotionState* motionState = new btDefaultMotionState(objTransform);
-
+		
         // we set the data structure for the rigid body
         btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, cShape, localInertia);
         // we set friction and restitution
@@ -131,8 +141,11 @@ public:
 
         // we create the rigid body
         btRigidBody* body = new btRigidBody(rbInfo);
+		// set the collision effect
+		body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
 		if (type == MAP) {
 			dynamicsWorld->updateAabbs();
+			map = body;
 		}
 
         //add the body to the dynamics world
@@ -149,23 +162,28 @@ public:
         return bodies[bodies.size() - 1];
     }
 
+	void ClearRbs() {
+		//we remove the rigid bodies from the dynamics world and delete them
+		for (int i = this->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+		{
+			// we remove all the Motion States
+			btCollisionObject* obj = this->dynamicsWorld->getCollisionObjectArray()[i];
+			btRigidBody* body = btRigidBody::upcast(obj);
+			if (body != map) {
+				if (body && body->getMotionState()) {
+					delete body->getMotionState();
+				}
+				this->dynamicsWorld->removeCollisionObject(obj);
+				delete obj;
+			}
+		}
+	}
+
     //////////////////////////////////////////
     // We delete the data of the physical simulation when the program ends
-    void Clear()
-    {
-        //we remove the rigid bodies from the dynamics world and delete them
-        for (int i=this->dynamicsWorld->getNumCollisionObjects()-1; i>=0 ;i--)
-        {
-            // we remove all the Motion States
-            btCollisionObject* obj = this->dynamicsWorld->getCollisionObjectArray()[i];
-            btRigidBody* body = btRigidBody::upcast(obj);
-            if (body && body->getMotionState())
-            {
-                delete body->getMotionState();
-            }
-            this->dynamicsWorld->removeCollisionObject(obj);
-            delete obj;
-        }
+    void Clear() {
+
+		ClearRbs();
 
         //delete dynamics world
         delete this->dynamicsWorld;

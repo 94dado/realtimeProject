@@ -48,6 +48,12 @@ public:
 	void SetParticleRotation(float minDegree, float maxDegree, glm::vec3 axes);
 	void EnableParticleRotation(bool enabled);
 	void Update();
+	void RemoveRigidBody() {
+		for (int i = 0; i < maxParticles; i++) {
+			particlesContainer[i].rb = NULL;
+			particlesContainer[i].alive = false;
+		}
+	}
 };
 
 void ParticleSystem::Render(){
@@ -83,7 +89,7 @@ int ParticleSystem::FindUnusedParticle() {
 			lastUsedParticle = i;
 			Particle &p = particlesContainer[i];
 			if (p.rb == NULL) {
-				bulletObject *rigidBody = physic->createRigidBody(PARTICLE, "", p.pos, 0.2f, glm::vec3(0.0f, p.rotationDegree, 0.0f), 1.0f, 0.2f, 0.3f, glm::vec3(0));
+				bulletObject *rigidBody = physic->createRigidBody(PARTICLE, "", p.pos, 0.2f, glm::vec3(0.0f, p.rotationDegree, 0.0f), 30.0f, 0.2, 0.3, glm::vec3(0));
 				rigidBody->particle = &p;
 				p.rb = rigidBody->body;
 			}
@@ -95,14 +101,14 @@ int ParticleSystem::FindUnusedParticle() {
 			lastUsedParticle = i;
 			Particle &p = particlesContainer[i];
 			if (p.rb == NULL) {
-				bulletObject *rigidBody = physic->createRigidBody(PARTICLE, "", p.pos, 0.2f, glm::vec3(0.0f, p.rotationDegree, 0.0f), 1.0f, 0.2f, 0.3f, glm::vec3(0));
+				bulletObject *rigidBody = physic->createRigidBody(PARTICLE, "", p.pos, 0.2f, glm::vec3(0.0f, p.rotationDegree, 0.0f), 30.0f, 0.2, 0.3, glm::vec3(0));
 				rigidBody->particle = &p;
 				p.rb = rigidBody->body;
 			}
 			return i;
 		}
 	}
-	return 0; // All particles are taken, override the first one
+	return -1; // All particles are taken
 }
 
 void ParticleSystem::SortParticles(){
@@ -123,6 +129,7 @@ void ParticleSystem::SetupParticles(){
 	//spawn particles
 	for(int i=0; i<newparticles; i++){
 		int particleIndex = FindUnusedParticle();
+		if (particleIndex == -1) return;
 		Particle &p = particlesContainer[particleIndex];
 		
 		p.alive = true;

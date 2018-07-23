@@ -223,19 +223,19 @@ int main()
 
 
 	//Create the spawn plane for particle system
-	glm::vec2 min(-130.0f, -130.0f);				//min x, min z
-	glm::vec2 max(130.0f, 130.0f);				//max x, max z
+	glm::vec2 min(-110.0f, -110.0);				//min x, min z
+	glm::vec2 max(110.0f, 110.0f);				//max x, max z
 	FixedYPlane rainPlane(min, max, 20.0f);	//min, maxe and y values
 
 											//Create and setup the rain particle system
-	rain = ParticleSystem(1000, &camera, &rainShader, &rainDropModel, &rainPlane, &bulletSimulation);
+	rain = ParticleSystem(2000, &camera, &rainShader, &rainDropModel, &rainPlane, &bulletSimulation);
 	rain.SetRotationAndScale(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0009f, 0.0009f, 0.002f));
 	rain.SetColor(glm::vec4(122 / 255.0f, 162 / 255.0f, 226 / 255.0f, 0.2f));
 	rain.SetDirection(glm::vec3(0.0f, -1.0f, 0.0f));
 	rain.EnableParticleRotation(false);
 
 	//Create and setup the snow particle system : NOT FINISHED, parameters are wrong!!!
-	snow = ParticleSystem(10000, &camera, &snowShader, &snowFlakeModel, &rainPlane, &bulletSimulation);
+	snow = ParticleSystem(1000, &camera, &snowShader, &snowFlakeModel, &rainPlane, &bulletSimulation);
 	snow.SetRotationAndScale(0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.8f, 0.8f, 0.8f));
 	snow.SetColor(glm::vec4(1.0f, 1.0f, 1.0f, 0.7f));
 	snow.SetDirection(glm::vec3(0.0f, -1.0f, 0.0f));
@@ -259,7 +259,8 @@ int main()
 	glCheckError();
 
 	// added rigidbody map
-	bulletObject* mapBullet = bulletSimulation.createRigidBody(MAP, "../progettoGrafica/models/volcano.obj", posMap, 0.0f, rotMap, 0, 0.2, 0.3, scaleMap);
+	bulletObject* mapBullet = bulletSimulation.createRigidBody(MAP, "../progettoGrafica/models/volcano.obj",
+		glm::vec3(posMap.x, posMap.y-12, posMap.z), 0.0f, glm::vec3(0.0f, 0.0f, 0.0f), 0, 0.2, 0.3, scaleMap);
 	// added callback to check collision
 	gContactAddedCallback = ContactAddedCallbackBullet;
 
@@ -317,7 +318,7 @@ int main()
 		glfwSwapBuffers(window);
 
 		// next check step of physic simulator
-		bulletSimulation.dynamicsWorld->stepSimulation(1 / 60.0f, 1/6.0F);
+		bulletSimulation.dynamicsWorld->stepSimulation(deltaTime);
 	}
 
 	normalShader.Delete();
@@ -407,7 +408,7 @@ void RenderObjects(Shader &shader, Model&envModel)
 	glm::mat4 envModelMatrix;
 	glm::mat3 envNormalMatrix;
 	envModelMatrix = glm::translate(envModelMatrix, posMap);
-	envModelMatrix = glm::rotate(envModelMatrix, glm::radians(1.0f), rotMap);
+	envModelMatrix = glm::rotate(envModelMatrix, glm::radians(0.0f), rotMap);
 	envModelMatrix = glm::scale(envModelMatrix, scaleMap);
 
 	envNormalMatrix = glm::inverseTranspose(glm::mat3(view*envModelMatrix));
@@ -456,6 +457,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		particleBools[RAIN_B] = !particleBools[RAIN_B];
 		particleBools[SNOW_B] = false;
 		ChangeShader();
+		//remove rb for better performances
+		snow.RemoveRigidBody();
+		bulletSimulation.ClearRbs();
 	}
 
 	//enable/disable snow
@@ -463,6 +467,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		particleBools[RAIN_B] = false;
 		particleBools[SNOW_B] = !particleBools[SNOW_B];
 		ChangeShader();
+		//remove rb for better performances
+		rain.RemoveRigidBody();
+		bulletSimulation.ClearRbs();
 	}
 
 	//enable/disable fog
@@ -512,12 +519,11 @@ bool ContactAddedCallbackBullet(btManifoldPoint &collisonPoint, const btCollisio
 	bulletObject* firstObj = (bulletObject*)obj1->getCollisionObject()->getUserPointer();
 	bulletObject* secondObj = (bulletObject*)obj2->getCollisionObject()->getUserPointer();
 	
-	cout << "Collision " << firstObj->type << " with " << secondObj->type << endl;
+	//cout << "Collision " << firstObj->type << " with " << secondObj->type << endl;
 
 	// check collision and set the hit with the map
 	if (firstObj->type != secondObj->type) {
 		if (firstObj->type == PARTICLE) {
-
 			firstObj->particle->alive = false;
 			firstObj->particle->cameraDistance = -1.0f;
 		}
