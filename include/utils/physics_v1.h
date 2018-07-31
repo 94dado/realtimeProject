@@ -135,8 +135,8 @@ public:
         if (type == PARTICLE){
             // the sphere touches the plane on the plane on a single point, and thus the friction between sphere and the plane does not works -> the sphere does not stop
             // To avoid the problem, we apply the rolling friction together with an angular damping (which applies a resistence during the rolling movement), in order to make the sphere to stop after a while
-            rbInfo.m_angularDamping =0.3;
-            rbInfo.m_rollingFriction = 0.3;
+            rbInfo.m_angularDamping = 9000;
+            rbInfo.m_rollingFriction = 9000;
         }
 
         // we create the rigid body

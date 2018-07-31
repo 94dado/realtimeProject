@@ -89,7 +89,7 @@ int ParticleSystem::FindUnusedParticle() {
 			lastUsedParticle = i;
 			Particle &p = particlesContainer[i];
 			if (p.rb == NULL) {
-				bulletObject *rigidBody = physic->createRigidBody(PARTICLE, "", p.pos, 0.2f, glm::vec3(0.0f, p.rotationDegree, 0.0f), 30.0f, 0.2, 0.3, glm::vec3(0));
+				bulletObject *rigidBody = physic->createRigidBody(PARTICLE, "", p.pos, 0.2f, glm::vec3(0.0f, p.rotationDegree, 0.0f), 30.0f, 9000.0, 9000.0, glm::vec3(0));
 				rigidBody->particle = &p;
 				p.rb = rigidBody->body;
 			}
@@ -101,7 +101,7 @@ int ParticleSystem::FindUnusedParticle() {
 			lastUsedParticle = i;
 			Particle &p = particlesContainer[i];
 			if (p.rb == NULL) {
-				bulletObject *rigidBody = physic->createRigidBody(PARTICLE, "", p.pos, 0.2f, glm::vec3(0.0f, p.rotationDegree, 0.0f), 30.0f, 0.2, 0.3, glm::vec3(0));
+				bulletObject *rigidBody = physic->createRigidBody(PARTICLE, "", p.pos, 0.2f, glm::vec3(0.0f, p.rotationDegree, 0.0f), 30.0f, 9000.0, 9000.0, glm::vec3(0));
 				rigidBody->particle = &p;
 				p.rb = rigidBody->body;
 			}

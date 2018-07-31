@@ -260,7 +260,7 @@ int main()
 
 	// added rigidbody map
 	bulletObject* mapBullet = bulletSimulation.createRigidBody(MAP, "../progettoGrafica/models/volcano.obj",
-		glm::vec3(posMap.x, posMap.y-12, posMap.z), 0.0f, glm::vec3(0.0f, 0.0f, 0.0f), 0, 0.2, 0.3, scaleMap);
+		glm::vec3(posMap.x, posMap.y-22, posMap.z), 0.0f, glm::vec3(0.0f, 0.0f, 0.0f), 0, 0.0, 0.0, scaleMap);
 	// added callback to check collision
 	gContactAddedCallback = ContactAddedCallbackBullet;
 
