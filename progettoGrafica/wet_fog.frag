@@ -191,17 +191,14 @@ void main()
     }
     //hasTexture == 1 => rendering map. Mix hemisphere light and wet effect
     else{
-        if(wetLevel >= 1.0){
-            //already saturated to wet
-            illuminatedColor = wet_effect(surfaceColor.xyz);
-        }else if (wetLevel <= 0.0){
+        if (wetLevel <= 0.0){
             //still saturated to dry
             illuminatedColor = hemisphere_light(vNormal, skyColor.xyz, surfaceColor.xyz, lightDir, modelMatrix, viewMatrix, vViewPosition);
         }else{
             //the final color is the "lerp" between dry and wet, using "wetLevel" as weight
             vec3 hl = hemisphere_light(vNormal, skyColor.xyz, surfaceColor.xyz, lightDir, modelMatrix, viewMatrix, vViewPosition);
-            vec3 wet = wet_effect(surfaceColor.xyz);
-
+            //vec3 wet = wet_effect(surfaceColor.xyz);
+            vec3 wet = mix(hl, vec3(0), wetLevel);
             illuminatedColor = mix(hl, wet, wetLevel);
         }
         alpha = 1.0;

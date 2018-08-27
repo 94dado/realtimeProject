@@ -226,18 +226,19 @@ int main()
 	glm::vec2 min(-110.0f, -110.0);				//min x, min z
 	glm::vec2 max(110.0f, 110.0f);				//max x, max z
 	FixedYPlane rainPlane(min, max, 20.0f);	//min, maxe and y values
+	FixedYPlane snowPlane(min, max, 150);	//min, maxe and y values
 
 											//Create and setup the rain particle system
-	rain = ParticleSystem(2000, &camera, &rainShader, &rainDropModel, &rainPlane, &bulletSimulation);
+	rain = ParticleSystem(2500, &camera, &rainShader, &rainDropModel, &rainPlane, &bulletSimulation);
 	rain.SetRotationAndScale(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0009f, 0.0009f, 0.002f));
-	rain.SetColor(glm::vec4(122 / 255.0f, 162 / 255.0f, 226 / 255.0f, 0.2f));
+	rain.SetColor(glm::vec4(177 / 255.0f, 189 / 255.0f, 209 / 255.0f, 0.2f));
 	rain.SetDirection(glm::vec3(0.0f, -1.0f, 0.0f));
 	rain.EnableParticleRotation(false);
 
 	//Create and setup the snow particle system : NOT FINISHED, parameters are wrong!!!
-	snow = ParticleSystem(1000, &camera, &snowShader, &snowFlakeModel, &rainPlane, &bulletSimulation);
+	snow = ParticleSystem(1500, &camera, &snowShader, &snowFlakeModel, &snowPlane, &bulletSimulation);
 	snow.SetRotationAndScale(0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.8f, 0.8f, 0.8f));
-	snow.SetColor(glm::vec4(1.0f, 1.0f, 1.0f, 0.7f));
+	snow.SetColor(glm::vec4(0.988f, 0.988f, 0.988f, 0.7f));
 	snow.SetDirection(glm::vec3(0.0f, -1.0f, 0.0f));
 	snow.EnableParticleRotation(true);
 	snow.SetParticleRotation(0.0f, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -294,14 +295,14 @@ int main()
 
 		//update eventual particle shading effect
 		if (particleBools[SNOW_B]) {
-			snowAmount -= deltaTime / 30.0f ;
+			snowAmount -= deltaTime / 40.0f ;
 			if (snowAmount < -0.98f) snowAmount = -0.98f;
 			glUniform1f(glGetUniformLocation(currentShader->Program, "snowLevel"), snowAmount);
 			glCheckError();
 		}
 		if (particleBools[RAIN_B]) {
-			rainAmount += deltaTime / 10.0f;
-			if (rainAmount > 1.0f) rainAmount = 1.0f;
+			rainAmount += deltaTime / 30.0f;
+			if (rainAmount > 0.6f) rainAmount = 0.6f;
 			glUniform1f(glGetUniformLocation(currentShader->Program, "wetLevel"), rainAmount);
 			glCheckError();
 		}
@@ -368,7 +369,7 @@ void ChangeShader(){
 		currentShader = &rainShader;
 		//setup rain amount
 		currentShader->Use();
-		rainAmount = -0.2f;
+		rainAmount = -0.3f;
 		glUniform1f(glGetUniformLocation(currentShader->Program, "wetLevel"), rainAmount);
 		glCheckError();
 	}

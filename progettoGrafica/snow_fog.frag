@@ -60,6 +60,7 @@ in float distVertex;
 //snow effect constants
 uniform vec3 snowDirection;
 uniform float snowLevel;    //range between [-1, 1]
+float snowMixValue = 0.2;
 
 //all credits goes to: https://github.com/hughsk/glsl-hemisphere-light
 vec3 hemisphere_light(vec3 normal, vec3 sky, vec3 ground,
@@ -92,13 +93,14 @@ void main()
     //hasTexture == 1 => map, get data from texture
     else{
         //enoughSnow => render snow effect
+        vec2 repeated_Uv = mod(interp_UV*repeat, 1.0);
+        vec4 textureColor = texture(tex, repeated_Uv);
         if(enoughSnow){
-            surfaceColor = particleColor;
+            surfaceColor = mix(particleColor, textureColor, snowMixValue);
             alpha = 1.0;
         }else{
             //!enoughSnow => render texture
-            vec2 repeated_Uv = mod(interp_UV*repeat, 1.0);
-            surfaceColor = texture(tex, repeated_Uv);
+            surfaceColor = textureColor;
             alpha = 1.0;
         }
     }

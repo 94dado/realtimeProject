@@ -66,7 +66,7 @@ public:
         this->dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,overlappingPairCache,solver,collisionConfiguration);
 
         // we set the gravity force
-        this->dynamicsWorld->setGravity(btVector3(0,-100,0));
+        this->dynamicsWorld->setGravity(btVector3(0,-150,0));
     }
 
     //////////////////////////////////////////
