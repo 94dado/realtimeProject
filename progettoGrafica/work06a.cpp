@@ -30,6 +30,7 @@ Z
 #define APIENTRY __stdcall
 #endif
 
+#include <math.h>
 #include <glad/glad.h>
 
 // GLFW library to create window and to manage I/O
@@ -274,6 +275,9 @@ int main()
 		GLfloat currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
+
+		int fps = round(1.0f / deltaTime);
+		std::cout << "fps:" << fps << std::endl;
 
 		// Check is an I/O event is happening
 		glfwPollEvents();
