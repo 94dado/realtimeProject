@@ -267,6 +267,8 @@ int main()
 	gContactAddedCallback = ContactAddedCallbackBullet;
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	int nbFrames = 0;
+	double lastTime = glfwGetTime();
 	// Rendering loop: this code is executed at each frame
 	while (!glfwWindowShouldClose(window))
 	{
@@ -276,8 +278,15 @@ int main()
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-		int fps = round(1.0f / deltaTime);
-		std::cout << "fps:" << fps << std::endl;
+		// Measure speed
+		double currentTime = currentFrame;
+		nbFrames++;
+		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
+			// printf and reset timer
+			std::cout << "fps:" << double(nbFrames) << endl;
+			nbFrames = 0;
+			lastTime += 1.0;
+		}
 
 		// Check is an I/O event is happening
 		glfwPollEvents();
