@@ -194,7 +194,7 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	//the "clear" color for the frame buffer
-	glClearColor(0.26f, 0.46f, 0.98f, 1.0f);
+	glClearColor(131 / 255.0f, 158 / 255.0f, 169 / 255.0f, 1.0f);
 
 	//setup shader
 	normalShader = Shader("../progettoGrafica/normal_fog.vert", "../progettoGrafica/normal_fog.frag");
@@ -232,7 +232,7 @@ int main()
 											//Create and setup the rain particle system
 	rain = ParticleSystem(2500, &camera, &rainShader, &rainDropModel, &rainPlane, &bulletSimulation);
 	rain.SetRotationAndScale(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0009f, 0.0009f, 0.002f));
-	rain.SetColor(glm::vec4(177 / 255.0f, 189 / 255.0f, 209 / 255.0f, 0.2f));
+	rain.SetColor(glm::vec4(1.0f, 1.0f, 1.0f, 0.01f)); //avg color of the sky
 	rain.SetDirection(glm::vec3(0.0f, -1.0f, 0.0f));
 	rain.EnableParticleRotation(false);
 
